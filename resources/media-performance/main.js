@@ -1,6 +1,7 @@
 (function () {
     const videoPipelineTrigger = document.getElementById('video-pipeline-trigger');
     const audioPipelineTrigger = document.getElementById('audio-pipeline-trigger');
+    const mseTestTrigger = document.getElementById('mse-test-trigger');
 
     // Generates sine waves to encode and immediately decode
     async function runTranscodeAudioPipelineTest() {
@@ -178,6 +179,58 @@
     if (audioPipelineTrigger) {
         audioPipelineTrigger.addEventListener('click', () => {
             runTranscodeAudioPipelineTest();
+        });
+    }
+
+    async function runMseTest() {
+        const video = document.querySelector('video');
+        const assetUrl = 'bigbuckbunny.webm';
+        const mimeCodec = 'video/webm; codecs="vp9"';
+
+        const mediaSource = new MediaSource();
+
+        video.src = URL.createObjectURL(mediaSource);
+
+        mediaSource.addEventListener('sourceopen', async () => {
+            const sourceBuffer = mediaSource.addSourceBuffer(mimeCodec);
+
+            const response = await fetch(assetUrl);
+            const fullBuffer = await response.arrayBuffer();
+
+            sourceBuffer.addEventListener('updateend', () => {
+                if (!sourceBuffer.updating && mediaSource.readyState === 'open') {
+                    mediaSource.endOfStream();
+                }
+                video.play();
+                const buffered = video.buffered;
+                if (buffered.length > 0) {
+                    const bufferedEnd = buffered.end(buffered.length - 1);
+                    const bufferGap = bufferedEnd - video.currentTime;
+                    console.log(`Currently buffered: ${bufferGap.toFixed(2)} seconds ahead.`);
+                }
+
+                console.log({ video });
+                console.dir(video);
+            });
+
+            sourceBuffer.appendBuffer(fullBuffer);
+        });
+
+        video.addEventListener('timeupdate', () => {
+            const quality = video.getVideoPlaybackQuality();
+            if (quality.totalVideoFrames > 0) {
+                console.log(`Total Frames: ${quality.totalVideoFrames}`);
+                console.log(`Dropped Frames: ${quality.droppedVideoFrames}`);
+                mseTestTrigger.classList.add('completed');
+                video.pause();
+            }
+        });
+
+    }
+
+    if (mseTestTrigger) {
+        mseTestTrigger.addEventListener('click', () => {
+            runMseTest();
         });
     }
 })();

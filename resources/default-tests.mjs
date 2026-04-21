@@ -957,6 +957,11 @@ export const DefaultSuites = freezeSuites([
                 trigger.click();
                 await page.waitForElement("#audio-pipeline-trigger.completed");
             }),
+            new BenchmarkTestStep("MseVideoPipeline", async (page) => {
+                const trigger = page.querySelector("#mse-test-trigger");
+                trigger.click();
+                await page.waitForElement("#mse-test-trigger.completed");
+            }),
         ],
     },
 ]);
