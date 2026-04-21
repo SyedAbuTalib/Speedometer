@@ -940,4 +940,23 @@ export const DefaultSuites = freezeSuites([
             }),
         ],
     },
+    {
+        name: "Media-Performance",
+        url: "resources/media-performance/index.html",
+        tags: ["default", "media"],
+        type: "async",
+        async prepare(page) {},
+        tests: [
+            new BenchmarkTestStep("TranscodeVideoPipeline", async (page) => {
+                const trigger = page.querySelector("#video-pipeline-trigger");
+                trigger.click();
+                await page.waitForElement("#video-pipeline-trigger.completed");
+            }),
+            new BenchmarkTestStep("TranscodeAudioPipeline", async (page) => {
+                const trigger = page.querySelector("#audio-pipeline-trigger");
+                trigger.click();
+                await page.waitForElement("#audio-pipeline-trigger.completed");
+            }),
+        ],
+    },
 ]);
