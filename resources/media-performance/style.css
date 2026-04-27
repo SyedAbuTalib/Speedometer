@@ -1,0 +1,92 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    margin: 20px;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #00aecd;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #008db8;
+}
+
+button.completed {
+    background-color: #4caf50;
+}
+
+.simulation-container {
+    display: none; /* Hide by default */
+    background-color: #2d2d2d;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.simulation-container.active {
+    display: block; /* Show when active */
+}
+
+h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #404040;
+    padding-bottom: 10px;
+}
+
+.video-chat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.video-box {
+    background-color: #202020;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+canvas {
+    background-color: #000;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.video-player-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+video {
+    background-color: #000;
+    border-radius: 4px;
+}
+
+.stats {
+    width: 100%;
+    max-width: 640px;
+    background-color: #202020;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.stats p {
+    margin: 5px 0;
+}

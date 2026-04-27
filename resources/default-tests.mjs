@@ -945,22 +945,20 @@ export const DefaultSuites = freezeSuites([
         url: "resources/media-performance/index.html",
         tags: ["default", "media"],
         type: "async",
-        async prepare(page) {},
+        async prepare(page) {
+            await page.waitForElement("#video-chat-trigger");
+            await page.callAsync("prefetchVideo");
+        },
         tests: [
-            new BenchmarkTestStep("TranscodeVideoPipeline", async (page) => {
-                const trigger = page.querySelector("#video-pipeline-trigger");
+            new BenchmarkTestStep("VideoChatSimulation", async (page) => {
+                const trigger = page.querySelector("#video-chat-trigger");
                 trigger.click();
-                await page.waitForElement("#video-pipeline-trigger.completed");
+                await page.waitForElement("#video-chat-trigger.completed");
             }),
-            new BenchmarkTestStep("TranscodeAudioPipeline", async (page) => {
-                const trigger = page.querySelector("#audio-pipeline-trigger");
+            new BenchmarkTestStep("VideoPlaybackSimulation", async (page) => {
+                const trigger = page.querySelector("#video-playback-trigger");
                 trigger.click();
-                await page.waitForElement("#audio-pipeline-trigger.completed");
-            }),
-            new BenchmarkTestStep("MseVideoPipeline", async (page) => {
-                const trigger = page.querySelector("#mse-test-trigger");
-                trigger.click();
-                await page.waitForElement("#mse-test-trigger.completed");
+                await page.waitForElement("#video-playback-trigger.completed");
             }),
         ],
     },

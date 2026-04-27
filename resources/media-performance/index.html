@@ -2,17 +2,38 @@
 <html>
 <head>
     <title>Media Benchmarks</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Hidden or basic triggers for Speedometer to click -->
-    <button id="mse-test-trigger">MSE</button>
-    <button id="video-pipeline-trigger">Video</button>
-    <button id="audio-pipeline-trigger">Audio</button>
-    <button id="memory-transfer-trigger">Memory</button>
-    <button id="audio-render-trigger">Render</button>
-    <button id="buffer-seek-trigger">Seek</button>
+    <div class="controls">
+        <button id="video-chat-trigger">Simulate Video Chat</button>
+        <button id="video-playback-trigger">Simulate Video Playback</button>
+    </div>
 
-    <video id="video"></video>
+    <div id="video-chat-container" class="simulation-container">
+        <h3>Video Chat Simulation</h3>
+        <div class="video-chat-grid">
+            <div class="video-box">
+                <h4>Local Preview</h4>
+                <canvas id="local-canvas" width="640" height="360"></canvas>
+            </div>
+            <div class="video-box">
+                <h4>Remote Preview</h4>
+                <canvas id="remote-canvas" width="640" height="360"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="video-playback-container" class="simulation-container">
+        <h3>Video Playback Simulation</h3>
+        <div class="video-player-layout">
+            <video id="video" width="640" height="360" controls></video>
+            <div class="stats">
+                <p>Status: <span id="playback-status">Idle</span></p>
+                <p>Dropped Frames: <span id="playback-dropped-frames">0</span></p>
+            </div>
+        </div>
+    </div>
 
     <script src="main.js"></script>
 </body>

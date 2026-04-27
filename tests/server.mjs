@@ -47,7 +47,7 @@ async function verifyStartup(ws, port) {
 }
 
 function main() {
-    const optionDefinitions = [{ name: "port", type: Number, defaultValue: 8080, description: "Set the test-server port, The default value is 8080." }];
+    const optionDefinitions = [{ name: "port", type: Number, defaultValue: 8081, description: "Set the test-server port, The default value is 8080." }];
     const options = commandLineArgs(optionDefinitions);
     serve(options.port);
 }
