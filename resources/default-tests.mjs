@@ -940,4 +940,44 @@ export const DefaultSuites = freezeSuites([
             }),
         ],
     },
+    {
+        name: "Media-Conferencing",
+        url: "resources/media-performance/conferencing.html",
+        tags: ["default", "media"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("#video-benchmark");
+        },
+        tests: [
+            new BenchmarkTestStep("VideoChat", async (page) => {
+                page.querySelector("#video-benchmark").click();
+                await page.waitForElement("#video-benchmark.completed");
+            }),
+            new BenchmarkTestStep("VoiceChat", async (page) => {
+                page.querySelector("#voice-benchmark").click();
+                await page.waitForElement("#voice-benchmark.completed");
+            }),
+        ],
+    },
+    {
+        name: "Media-Streaming",
+        url: "resources/media-performance/streaming.html",
+        tags: ["default", "media"],
+        type: "async",
+        async prepare(page) {
+            await page.waitForElement("#initial-playback");
+            page.call("prefetchVideo");
+            await page.waitForElement("body[data-prefetch-ready='1']");
+        },
+        tests: [
+            new BenchmarkTestStep("InitialPlayback", async (page) => {
+                page.querySelector("#initial-playback").click();
+                await page.waitForElement("#initial-playback.completed");
+            }),
+            new BenchmarkTestStep("Seek", async (page) => {
+                page.querySelector("#seek").click();
+                await page.waitForElement("#seek.completed");
+            }),
+        ],
+    },
 ]);
