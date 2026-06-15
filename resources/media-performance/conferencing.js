@@ -17,6 +17,7 @@
     const FRAME_WIDTH = 1920;
     const FRAME_HEIGHT = 1080;
     const VIDEO_FRAME_COUNT = 10;
+    const VIDEO_FRAME_DURATION_US = 33333; // ~30fps in microseconds
     const AUDIO_FRAME_COUNT = 100;
     const AUDIO_SAMPLE_RATE = 48000;
     const AUDIO_FRAME_SIZE = 1024;
@@ -143,6 +144,8 @@
         try {
             session.audioDecoder = new AudioDecoder({
                 output(data) {
+                    const buf = new Float32Array(data.numberOfFrames * data.numberOfChannels);
+                    data.copyTo(buf, { planeIndex: 0 });
                     data.close();
                 },
                 error(e) {
@@ -181,10 +184,10 @@
     async function simulateVideoCall() {
         if (!session.videoEncoder)
             throw new Error("VideoEncoder not initialized");
-        for (let i = 0; i <= VIDEO_FRAME_COUNT; i++) {
+        for (let i = 0; i < VIDEO_FRAME_COUNT; i++) {
             drawLocalFrame(i);
 
-            const frame = new VideoFrame(localCanvas, { timestamp: i * 33333 });
+            const frame = new VideoFrame(localCanvas, { timestamp: i * VIDEO_FRAME_DURATION_US });
             session.videoEncoder.encode(frame);
             frame.close();
         }
@@ -192,6 +195,8 @@
         await session.videoEncoder.flush();
         await session.videoDecoder.flush();
 
+        if (session.framesDecoded !== VIDEO_FRAME_COUNT)
+            throw new Error(`Expected ${VIDEO_FRAME_COUNT} frames decoded, got ${session.framesDecoded}`);
         setStatus(`Frames decoded: ${session.framesDecoded}`);
     }
 

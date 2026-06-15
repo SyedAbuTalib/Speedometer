@@ -24,4 +24,4 @@ Tests real-time video encoding and decoding pipelines using WebCodecs. While the
 
 ### VoiceChat
 
-Tests real-time audio encoding, decoding using WebCodecs and audio routing and effects processing using WebAudio. It measures the browser's efficiency in processing audio streams and applying standard audio nodes. The time measured is from the `voice-benchmark` button clicked until all audio frames have been encoded/decoded and the WebAudio offline rendering completes.
+Tests real-time audio encoding, decoding using WebCodecs and audio routing and effects processing using WebAudio. It measures the browser's efficiency in processing audio streams and applying standard audio nodes. The two stages run sequentially: the WebCodecs encode/decode round trip completes before the WebAudio offline rendering begins. The time measured is from the `voice-benchmark` button clicked until all audio frames have been encoded/decoded and the WebAudio offline rendering completes.
