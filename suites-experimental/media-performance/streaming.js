@@ -177,6 +177,8 @@
     }
 
     window.prefetchVideo = prefetchVideo;
+    window.initialPlayback = initialPlayback;
+    window.seek = seek;
     document.getElementById("initial-playback").addEventListener("click", initialPlayback);
     document.getElementById("seek").addEventListener("click", seek);
 })();

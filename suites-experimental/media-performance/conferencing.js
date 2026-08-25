@@ -336,6 +336,8 @@
         }
     }
 
+    window.runVideoBenchmark = runVideoBenchmark;
+    window.runVoiceBenchmark = runVoiceBenchmark;
     document.getElementById("video-benchmark").addEventListener("click", runVideoBenchmark);
     document.getElementById("voice-benchmark").addEventListener("click", runVoiceBenchmark);
 })();

@@ -302,12 +302,10 @@ export const ExperimentalSuites = freezeSuites([
         },
         tests: [
             new BenchmarkTestStep("VideoChat", async (page) => {
-                page.querySelector("#video-benchmark").click();
-                await page.waitForElement("#video-benchmark.completed");
+                await page.callAsyncBlocking("runVideoBenchmark");
             }),
             new BenchmarkTestStep("VoiceChat", async (page) => {
-                page.querySelector("#voice-benchmark").click();
-                await page.waitForElement("#voice-benchmark.completed");
+                await page.callAsyncBlocking("runVoiceBenchmark");
             }),
         ],
     },
@@ -323,12 +321,10 @@ export const ExperimentalSuites = freezeSuites([
         },
         tests: [
             new BenchmarkTestStep("InitialPlayback", async (page) => {
-                page.querySelector("#initial-playback").click();
-                await page.waitForElement("#initial-playback.completed");
+                await page.callAsyncBlocking("initialPlayback");
             }),
             new BenchmarkTestStep("Seek", async (page) => {
-                page.querySelector("#seek").click();
-                await page.waitForElement("#seek.completed");
+                await page.callAsyncBlocking("seek");
             }),
         ],
     },
